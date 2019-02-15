@@ -14,18 +14,26 @@ const setSlidePosition = (slide,index) => {
 }
 slides.forEach(setSlidePosition);
 
-// when I click left, move slides to the left
+const moveToSlide = (track, currentSlide, targetSlide) => {
+  track.style.transform = 'translateX(-' + targetSlide.style.left + ')';
+  currentSlide.classList.remove('current-slide');
+  targetSlide.classList.add('current-slide');
+}
 
+// when I click left, move slides to the left
+prevButton.addEventListener('click', e =>{
+  const currentSlide = track.querySelector('.current-slide');
+  const prevSlide = currentSlide.previousElementSibling;
+
+  moveToSlide(track, currentSlide, prevSlide);
+});
 
 // when I click right, move slides to the right
 nextButton.addEventListener('click', e => {
   const currentSlide = track.querySelector('.current-slide');
   const nextSlide = currentSlide.nextElementSibling;
-  const amountToMove = nextSlide.style.left;
-  // move to the next slide
-  track.style.transform = 'translateX(-' + amountToMove + ')';
-  currentSlide.classList.remove('current-slide');
-  nextSlide.classList.add('current-slide');
-})
+
+  moveToSlide(track, currentSlide, nextSlide);
+});
 
 // when I click on the nav indicators, move to that slide
